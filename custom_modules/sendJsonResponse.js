@@ -1,9 +1,9 @@
 /**
+ * Send json response with the given status code
  * 
- * 
- * @param {any} the response object
- * @param {any} the http status to sen
- * @param {any} the json content
+ * @param {object} the response object
+ * @param {number} the http status to send
+ * @param {object} the json content
  */
 function sendJsonResponse (res, status, content) {
     res.status(status);
