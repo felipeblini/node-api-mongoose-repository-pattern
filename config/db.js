@@ -1,8 +1,8 @@
-var env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || 'development';
 
-var config = {
+const config = {
     development: {
-        db: 'mongodb://localhost/concrete-users-development'
+        db: 'mongodb://localhost/concrete-users-dev'
     },
     production: {
         db: 'mongodb://felipe:ga$$369@ds033116.mlab.com:33116/d4udb'

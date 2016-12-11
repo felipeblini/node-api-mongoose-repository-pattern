@@ -1,14 +1,15 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
-var consign = require('consign');
-var bodyParser = require('body-parser');
+const consign = require('consign');
+const bodyParser = require('body-parser');
 
-var sendJsonResponse = require('../custom_modules/sendJsonResponse.js');
+console.log(app.get('env'));
 
 app.use(bodyParser.json());
 
-consign().include('./controllers').into(app);
+consign().include('./routes')
+    .into(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -20,28 +21,17 @@ app.use(function(req, res, next) {
 
 // error handlers
 
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        let status = err.status || 500;
-        let message = err.message;
-
-        sendJsonResponse(res, status, message);
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    let status = err.status || 500;
-    let message = err.message;
-
-    if(status !== 404) {
-        message = 'error';
+app.use(function(e, req, res, next) {
+    let status = e.status || 500;
+    let error = { message: e.message };
+    
+    if (app.get('env') === 'development') {
+        error.message = status + ' ' + e;
+        res.status(status).send(e.stack);
+    } else {
+        console.log(error);
+        res.status(status).json(error);
     }
-
-    sendJsonResponse(res, status, message);
 });
 
 module.exports = function() {

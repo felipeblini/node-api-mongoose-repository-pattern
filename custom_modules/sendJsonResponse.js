@@ -6,8 +6,7 @@
  * @param {object} the json content
  */
 function sendJsonResponse (res, status, content) {
-    res.status(status);
-    res.json(content);
+    res.status(status).json(content);
 }
 
 module.exports = sendJsonResponse;
